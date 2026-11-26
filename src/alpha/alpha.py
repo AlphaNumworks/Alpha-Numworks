@@ -106,11 +106,12 @@ class SceneManager:
         return self.__stack[-1]
 
 class App:
-    def __init__(self):
-        self.events       : EventBus     = EventBus()
+    def __init__(self, debug = False):
+        self.events       : EventBus  = EventBus()
         self.keyboard  : Keyboard     = Keyboard(ion.KEY_OK, ion.KEY_LEFT, ion.KEY_RIGHT, ion.KEY_UP, ion.KEY_DOWN)
         self.scenes    : SceneManager = SceneManager()
         self.is_running: bool         = True
+        self.debug: bool              = False
 
         self.tickrate  : int   = 30
         self.frame_time: float = 1.0 / self.tickrate
