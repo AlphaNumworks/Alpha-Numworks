@@ -34,5 +34,9 @@ setuptools.setup(
     packages=[
         "alpha",
     ],
+    install_requires=[
+        "ion-numworks==2.1",
+        "kandinsky==2.7.2"
+    ],
     python_requires= '>=3.6',
 )
