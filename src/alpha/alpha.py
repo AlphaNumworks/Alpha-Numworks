@@ -1,5 +1,6 @@
 import time
 import ion
+import kandinsky
 
 ## Keyboard
 class Keyboard:
@@ -54,6 +55,7 @@ class EventBus:
 class Scene:
     def __init__(self):
         self._isDirty: bool = True
+        self.name: str = type(self).__name__
 
     def mark_dirty(self, evt) -> None:
         """ evt just so I can subscribe events """
@@ -105,25 +107,47 @@ class SceneManager:
             raise RuntimeError("No scene in stack")
         return self.__stack[-1]
 
+class Debug:
+    def __init__(self):
+        self._scene_label_width = 0
+
+    def show_info(self, app):
+        if isinstance(app, App):
+            fps = str(round(1 / app.frame_duration))
+            kandinsky.draw_string(f"FPS: {fps}/{app.tickrate}    ", 0, 0)
+            scene_label = f"Scene: {app.scenes.current().name}"
+            padding = " " * (self._scene_label_width - len(scene_label))
+            kandinsky.draw_string(scene_label + padding, 0, 20)
+            self._scene_label_width = len(scene_label)
+
 class App:
     def __init__(self, debug = False):
         self.events       : EventBus  = EventBus()
         self.keyboard  : Keyboard     = Keyboard(ion.KEY_OK, ion.KEY_LEFT, ion.KEY_RIGHT, ion.KEY_UP, ion.KEY_DOWN)
         self.scenes    : SceneManager = SceneManager()
         self.is_running: bool         = True
-        self.debug: bool              = False
+        self.debug: bool              = debug
 
         self.tickrate  : int   = 30
         self.frame_time: float = 1.0 / self.tickrate
+        self.frame_duration = None
 
     def run(self):
+        debugger = Debug()
+        previous_frame_start = None
         while self.is_running:
             try:
                 ts = time.monotonic()
 
                 self.keyboard.update()
                 self.scenes.current().update(self)
-                self.scenes.current().render()
+                scene = self.scenes.current()
+                scene.render()
+
+                if self.debug:
+                    self.frame_duration = 1 if previous_frame_start is None else ts - previous_frame_start
+                    debugger.show_info(self)
+                previous_frame_start = ts
 
                 elapsed = time.monotonic() - ts
                 waiting = self.frame_time - elapsed
@@ -134,6 +158,9 @@ class App:
                 break
 
     def set_tickrate(self, x : int):
+        if x <= 0:
+            raise ValueError("Tick rate must be positive")
+        self.frame_time = 1.0 / x
         self.tickrate = x
 
     def stop(self):
