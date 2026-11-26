@@ -60,7 +60,7 @@ class Scene:
         self._isDirty = True
 
     def mark_clean(self):
-        pass
+        self._isDirty = False
 
     def is_dirty(self) -> bool:
         return self._isDirty
@@ -133,7 +133,7 @@ class App:
                 break
 
     def set_tickrate(self, x : int):
-        pass
+        self.tickrate = x
 
     def stop(self):
         self.is_running = False
