@@ -1,6 +1,8 @@
-import time
+import os
+os.environ["KANDINSKY_OS_MODE"] = '2' # set the os mode to Upsilon
 import ion
 import kandinsky
+import time
 
 ## Keyboard
 class Keyboard:
@@ -114,10 +116,10 @@ class Debug:
     def show_info(self, app):
         if isinstance(app, App):
             fps = str(round(1 / app.frame_duration))
-            kandinsky.draw_string(f"FPS: {fps}/{app.tickrate}    ", 0, 0)
+            kandinsky.draw_string(f"FPS: {fps}/{app.tickrate}    ", 0, 0, (0, 0, 0), (248, 252, 248), True)
             scene_label = f"Scene: {app.scenes.current().name}"
             padding = " " * (self._scene_label_width - len(scene_label))
-            kandinsky.draw_string(scene_label + padding, 0, 20)
+            kandinsky.draw_string(scene_label + padding, 0, 10, (0, 0, 0), (248, 252, 248), True)
             self._scene_label_width = len(scene_label)
 
 class App:
