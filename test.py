@@ -1,3 +1,5 @@
+import os
+os.environ['KANDINSKY_ZOOM_RATIO'] = '3' # set the zoom ratio so the window is visible
 import src.alpha.alpha as alpha
 from kandinsky import fill_rect
 
