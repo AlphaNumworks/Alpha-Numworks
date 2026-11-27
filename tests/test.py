@@ -1,8 +1,13 @@
 import os
 os.environ['KANDINSKY_ZOOM_RATIO'] = '3' # set the zoom ratio so the window is visible
-import src.alpha.alpha as alpha
-from kandinsky import fill_rect
+import sys
+from pathlib import Path
 
+alpha_dir = Path(__file__).resolve().parents[1] / "src" / "alpha-numworks"
+sys.path.insert(0, str(alpha_dir))
+import alpha
+
+from kandinsky import fill_rect
 
 class MainScene(alpha.Scene):
     def update(self, app):

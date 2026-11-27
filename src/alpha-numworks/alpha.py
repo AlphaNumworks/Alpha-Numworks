@@ -1,5 +1,5 @@
 import os
-os.environ["KANDINSKY_OS_MODE"] = '2' # set the os mode to Upsilon
+os.environ["KANDINSKY_OS_MODE"] = '2' # set the os mode to Omega
 import ion
 import kandinsky
 import time
