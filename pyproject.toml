@@ -1,0 +1,33 @@
+[build-system]
+requires = ["setuptools >= 77.0.3"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "alpha-numworks"
+version = "1.0.0"
+authors = [
+    {name = "AlphaNumworks"},
+    {name = "Lucas Cialdella"}
+]
+description = "PC bindings for the Alpha OS NumWorks Python module"
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE*"]
+requires-python = ">=3.9"
+
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+]
+
+dependencies = [
+    "ion-numworks==2.1",
+    "kandinsky==2.7.2",
+]
+
+[project.urls]
+Homepage = "https://github.com/AlphaNumworks/Alpha-Numworks"
+Issues   = "https://github.com/AlphaNumworks/Alpha-Numworks/issues"
+
+[tool.setuptools.packages.find]
+where = ["src"]
