@@ -119,17 +119,17 @@ class Debug:
     def show_info(self, app):
         if isinstance(app, App):
             fps = str(round(1 / app.frame_duration))
-            kandinsky.draw_string(f"FPS: {fps}/{app.tickrate}    ", 0, 0, (0, 0, 0), (248, 252, 248), True)
+            kandinsky.draw_string(f"FPS: {fps}/{app.tickrate}", 0, 0, (0, 0, 0), (248, 252, 248), True)
+
+            scene_label = f"Scene: {app.scenes.current().name}"
+            kandinsky.draw_string(scene_label, 0, 12, (0, 0, 0), (248, 252, 248), True)
 
             gc_label = "GC: n/d"
             if self._tracemalloc is not None:
                 used, total = self._tracemalloc.get_traced_memory()
                 if total > 0:
                     gc_label = f"GC: {used}/{total} ({used * 100 // total}%)"
-            kandinsky.draw_string(gc_label, 0, 20, (0, 0, 0), (248, 252, 248), True)
-
-            scene_label = f"Scene: {app.scenes.current().name}"
-            kandinsky.draw_string(scene_label, 0, 10, (0, 0, 0), (248, 252, 248), True)
+            kandinsky.draw_string(gc_label, 0, 24, (0, 0, 0), (248, 252, 248), True)
 
             self._scene_label_width = len(scene_label)
 

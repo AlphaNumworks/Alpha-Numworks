@@ -9,8 +9,8 @@ class MainScene(alpha.Scene):
         pass
 
     def render(self):
+        fill_rect(0, 0, 320, 222, "#ffffff")
         fill_rect(100, 100, 50, 50, (255, 0, 0))
-
 
 app = alpha.App(True)
 app.scenes.push(MainScene())
